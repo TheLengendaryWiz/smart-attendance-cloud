@@ -1,11 +1,30 @@
+import dataRetreival.drv
 import flask
 from datetime import datetime
 import json
 import register
-app=flask.Flask('app')
+
+app=flask.Flask(__name__, static_folder='templates/static') 
 
 timeThreshold = 60
 filePath = r"data.json"
+
+
+RetTypes = {"name": dataRetreival.drv.name, "usn": dataRetreival.drv.usn, "date": dataRetreival.drv.date}
+
+@app.route("/q", methods=["POST"])
+def retQuery():
+    global RetTypes
+    payload = flask.request.form
+  
+    type = payload["q"]
+    args = payload["args"]
+    print("from main" + RetTypes[type](args))
+    return RetTypes[type](args)
+
+@app.route("/dashboard")
+def dash():
+    return flask.render_template("index.html")
 
 def checkTime(t1, t2):
     global timeThreshold
@@ -70,13 +89,14 @@ def updateEntry(usn):
         fil1.write(data)
 
 @app.route('/' , methods=['GET','POST'])
-def main():
+def update():
     if flask.request.method == 'POST':
-        usn = flask.request.json['usn']
+        usn = flask.request.form['usn']
         updateEntry(usn)
-
+        print("post") 
         return "Done"
     if flask.request.method=='GET':
+        print("get")
         return 'GET'
 
 @app.route('/register' , methods=['GET','POST'])
@@ -86,7 +106,7 @@ def registerEndpoint():
     if flask.request.method=='POST':
         nameusnuid=flask.request.json['data']
         nameusnuidarray=nameusnuid.split(';')
-        register.register(nameusnuidarray[0],nameusnuidarray[1],nameusnuidarray[2])
+        register.register(nameusnuidarray[0],nameusnuidarray[1],nameusnuidarray[2],nameusnuid[3],nameusnuid[4])
         return "Done"
 
 app.run(host='0.0.0.0', port=8080)

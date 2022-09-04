@@ -222,7 +222,7 @@ body {
     let type = "usn"
 
 
-    function Firstel(conts, index=false){ 
+    function addItem(conts, index=false){ 
         
         var x = document.createElement("div")
         x.classList.add("userIcon")
@@ -249,12 +249,12 @@ body {
           dat = JSON.parse(data)
           console.log(dat)
           document.getElementById("accContainer").textContent = ""
-          Firstel([["Name", dat.name], ["Class", dat.clas], ["Currently In school", dat.inSchool]], true)
+          addItem([["Name", dat.name], ["Class", dat.clas], ["Section", dat.section] ["Currently In school", dat.inSchool]], true)
           dat.entries.forEach(function(n){
             if (n.end && n.start){
-              Firstel([["Reporting time", n.start], ["Leaving time", n.end]])
+              addItem([["Reporting time", n.start], ["Leaving time", n.end]])
             }else if(n.start){
-              Firstel([["Reporting time", n.start]])
+              addItem([["Reporting time", n.start]])
             }
           })
         })

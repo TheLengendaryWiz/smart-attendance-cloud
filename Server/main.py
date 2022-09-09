@@ -127,7 +127,7 @@ def registerEndpoint():
     if flask.request.method == 'POST':
         nameusnuid = flask.request.json['data']
         nameusnuidarray = nameusnuid.split(';')
-        register.register(nameusnuidarray[0], nameusnuidarray[1], nameusnuidarray[2], nameusnuid[3], nameusnuid[4])
+        register.register(nameusnuidarray[0], nameusnuidarray[1], nameusnuidarray[2], nameusnuidarray[3], nameusnuidarray[4])
         return "Done"
 
 

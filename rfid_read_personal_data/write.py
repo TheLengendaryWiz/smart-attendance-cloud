@@ -34,6 +34,8 @@ def do_write():
 						#TODO: Add a few checks for name and usn. ie: to check if they have a semicolon or if USN is of specific format
 						name=input("Enter Name: ")
 						usn = input("Enter USN: ")
+						clas=input("ENter Class : ")
+						section = input("Enter Section : ")
 						nameusn = name + ';' + usn
 						if(len(nameusn)<16):
 							nameusn=nameusn+'\n'*(16-len(nameusn))
@@ -43,6 +45,8 @@ def do_write():
 						if rdr.auth(rdr.AUTHENT1A, 8, key, raw_uid) == rdr.OK:
 							stat = rdr.write(8, bytes(nameusn,'utf-8'))
 							nameUSN=nameusn+';'+str(raw_uid[0])+' ' +str(raw_uid[1])+' ' + str(raw_uid[2]) + ' ' + str(raw_uid[3])
+
+							nameUSN=nameUSN+';'+ clas + ';' + section
 							payload=ujson.dumps({'data':nameUSN})
 							response = urequests.get(f"https://SmartAttendanceSystem-Server.prateekm2.repl.co", headers = {'content-type': 'application/json'},data=payload)
 							rdr.stop_crypto1()

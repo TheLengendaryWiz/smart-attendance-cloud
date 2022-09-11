@@ -228,7 +228,8 @@ body {
         x.classList.add("userIcon")
         x.style.width = "90%"
         x.innerHTML = `<p style='padding: 15px; line-height: 150%; font-size: 150%;color: white;margin-left: 20px'>`
-        conts.forEach(function(i){x.innerHTML = x.innerHTML + `${i[0]}: ${i[1]} <br>`;})
+        
+        conts.forEach(function(i){console.log(i);   x.innerHTML = x.innerHTML + `${i[0]}: ${i[1]} <br>`;})
             
         
         x.innerHTML = x.innerHTML + "</p>"
@@ -246,10 +247,14 @@ body {
         let payload = {"q": type, "args": document.getElementById("searchBar").value}
 
         $.post("/q", payload, function(data, status){
+          document.getElementById("accContainer").textContent = ""
+          if(data == "Usn Not Found"){
+            addItem([["Usn not found", "please try again"]], true)
+          }
           dat = JSON.parse(data)
           console.log(dat)
-          document.getElementById("accContainer").textContent = ""
-          addItem([["Name", dat.name], ["Class", dat.clas], ["Section", dat.section] ["Currently In school", dat.inSchool]], true)
+          
+          addItem([["Name", dat.name], ["Class", dat.clas], ["Section", dat.section], ["Currently In school", dat.inSchool]], true)
           dat.entries.forEach(function(n){
             if (n.end && n.start){
               addItem([["Reporting time", n.start], ["Leaving time", n.end]])

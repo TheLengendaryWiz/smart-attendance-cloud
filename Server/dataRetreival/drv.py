@@ -9,7 +9,7 @@ def name(name):
         cont = json.loads(cont)
         final = []
         for i in cont.keys():
-            if cont[i]["name"].lower() == name.lower():
+            if name.lower() in cont[i]["name"]:
                 new = cont[i]
                 new["usn"] = i
                 final.append(new)
@@ -23,9 +23,9 @@ def usn(usn):
         print(cont)
         cont = json.loads(cont)
     try:
-        print("from drv" + json.dumps(cont[usn]))
-        return json.dumps(cont[usn])
-    except Exception as e:
+        print("from drv" + json.dumps(cont[usn.upper()]))
+        return json.dumps(cont[usn.upper()])
+    except KeyError:
         return "Usn Not Found"
 
 
@@ -53,19 +53,26 @@ def gExClass(classec, date):
     ws = wb.active
     ws["A1"] = classec
     ws["B1"] = "Attendance"
-    ws["C1"] = "Entry Time"
-    ws["D1"] = "Exit Time"
+    ws["C1"] = "Entry Time (yr:m:d:hr:min:sec)"
+    ws["D1"] = "Exit Time (yr:m:d:hr:min:sec)"
     for i in students:
         print("hello")
         entry = []
         for j in i["entries"]:
             if date in j["start"]:
-                entry = [j["start"], j["end"]]
+                try:
+                    entry = [j["start"], j["end"]]
+                except KeyError:
+                    entry = [j["start"], ""]
         if len(entry) > 0:
             attendance = "present"
+            ws.append([f"Name: {i['name']} Usn: {i['usn']}", attendance, entry[0], entry[1]])
         else:
             attendance = "absent"
-        print([f"Name: {i['name']} Usn: {i['usn']}", attendance, entry[0], entry[1]])
-        ws.append([f"Name: {i['name']} Usn: {i['usn']}", attendance, entry[0], entry[1]])
+            ws.append([f"Name: {i['name']} Usn: {i['usn']}", attendance, "", ""])
+
+        #print([f"Name: {i['name']} Usn: {i['usn']}", attendance, entry[0], entry[1]])
+
+        
 
     return wb

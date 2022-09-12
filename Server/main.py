@@ -13,19 +13,25 @@ filePath = r"data.json"
 RetTypes = {"name": dataRetreival.drv.name, "usn": dataRetreival.drv.usn, "class": dataRetreival.drv.clas}
 
 
+
+#/d?classec=12%20E3&date=2022:08:13 (sample)
 @app.route("/d", methods=["GET"])
 def retExcel():
-    classec = flask.request.args.get("classec")
-    date = flask.request.args.get("date")
-    workbook = dataRetreival.drv.gExClass(classec, date)
+    try:
+        classec = flask.request.args.get("classec")
+        date = flask.request.args.get("date")
+        workbook = dataRetreival.drv.gExClass(classec, date)
 
-    return flask.Response(
-        save_virtual_workbook(workbook),
-        headers={
-            'Content-Disposition': f'attachment; filename={classec}:{date}.xlsx',
-            'Content-type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-        }
-    )
+        return flask.Response(
+            save_virtual_workbook(workbook),
+            headers={
+                'Content-Disposition': f'attachment; filename={classec}:{date}.xlsx',
+                'Content-type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            }
+        )
+    except Exception as e:
+        print(e)
+        return "An Unexpected Error occured. Please check your input data"
 
 
 @app.route("/q", methods=["POST"])

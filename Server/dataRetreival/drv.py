@@ -9,12 +9,12 @@ def name(name):
         cont = json.loads(cont)
         final = []
         for i in cont.keys():
-            if name.lower() in cont[i]["name"]:
+            if name.lower() in cont[i]["name"].lower():
                 new = cont[i]
                 new["usn"] = i
                 final.append(new)
 
-    return final
+    return str(final)
 
 
 def usn(usn):
@@ -44,7 +44,7 @@ def clas(classec):
                 new["usn"] = i
                 final.append(new)
     print(final)
-    return final
+    return str(final)
 
 
 def gExClass(classec, date):

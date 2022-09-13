@@ -12,7 +12,9 @@ filePath = r"data.json"
 
 RetTypes = {"name": dataRetreival.drv.name, "usn": dataRetreival.drv.usn, "class": dataRetreival.drv.clas}
 
-
+@app.route('/download')
+def download():
+    return flask.render_template("download.html")
 
 #/d?classec=12%20E3&date=2022:08:13 (sample)
 @app.route("/d", methods=["GET"])

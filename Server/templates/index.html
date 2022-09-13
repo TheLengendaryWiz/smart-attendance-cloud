@@ -186,9 +186,9 @@ body {
 		<h1 class="logo"><a href="#">Smart attendance system</a></h1>
       <ul class="main-nav">
           <li><a href="#">Download</a></li>
-          <li><a href="#">Name Search</a></li>
-          <li><a href="#">USN Search</a></li>
-          <li><a href="#">Search By Class</a></li>
+          <li><a onclick=fn()>Name Search</a></li>
+          <li><a onclick=fu()>USN Search</a></li>
+          <li><a onclick=fc()>Search By Class</a></li>
       </ul>
 	</header>
     <center id="content">
@@ -218,10 +218,26 @@ body {
 			<li></li>
 		</ul>
   <script>
-    
+    function parseJSONStringToArray(jsonString) {
+    var array = [];
+    try {
+        array = JSON.parse(jsonString);
+    } catch (e) {
+        console.log(e);
+    }
+    return array;
+}
     let type = "usn"
-
-
+    console.log(type)
+    function fn(){
+      console.log(type);type='name'; document.getElementById('searchBar').value='';document.getElementById('searchBar').placeholder='Search Name';console.log(type)
+    }
+    function fc(){
+      console.log(type);type='class'; document.getElementById('searchBar').value='';document.getElementById('searchBar').placeholder='Search By Class';console.log(type)
+    }
+    function fu(){
+      console.log(type);type='usn'; document.getElementById('searchBar').value='';document.getElementById('searchBar').placeholder='Search USN';console.log(type)
+    }
     function addItem(conts, index=false){ 
         
         var x = document.createElement("div")
@@ -244,10 +260,12 @@ body {
     }
     
     function getData(){
+        console.log(type)
         let payload = {"q": type, "args": document.getElementById("searchBar").value}
 
         $.post("/q", payload, function(data, status){
           document.getElementById("accContainer").textContent = ""
+          if(type=='usn'){
           if(data == "Usn Not Found"){
             addItem([["Usn not found", "please try again"]], true)
           }
@@ -262,7 +280,30 @@ body {
               addItem([["Reporting time", n.start]])
             }
           })
-        })
+    }
+          if(type=="class"){
+            if(data == "[]"){
+              addItem([["No such entries were found.", "The search results came empty"]],true)
+            }
+            else{
+              dat=parseJSONStringToArray(data)
+              dat.forEach(function(n){
+                addItem([["Name", n.name],["USN", n.usn], ["Class", n.clas], ["Section", n.section], ["Currently In school", n.inSchool]], true)
+              })
+            }
+          }
+          if(type=="name"){
+            if(data == "[]"){
+              addItem([["No such entries were found.", "The search results came empty"]],true)
+            }
+            else{
+              dat=parseJSONStringToArray(data)
+              dat.forEach(function(n){
+                addItem([["Name", n.name],["USN", n.usn], ["Class", n.clas], ["Section", n.section], ["Currently In school", n.inSchool]], true)
+              })
+            }
+          }
+  })
     }
 
   </script>

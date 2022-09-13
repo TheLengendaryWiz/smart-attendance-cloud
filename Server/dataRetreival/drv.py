@@ -14,7 +14,7 @@ def name(name):
                 new["usn"] = i
                 final.append(new)
 
-    return str(final)
+    return json.dumps(final)
 
 
 def usn(usn):
@@ -44,7 +44,7 @@ def clas(classec):
                 new["usn"] = i
                 final.append(new)
     print(final)
-    return str(final)
+    return json.dumps(final)
 
 
 def gExClass(classec, date):

@@ -32,7 +32,7 @@ def retExcel():
             }
         )
     except Exception as e:
-        print(e)
+        print(e.with_traceback())
         return "An Unexpected Error occured. Please check your input data"
 
 

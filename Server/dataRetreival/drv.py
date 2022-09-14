@@ -48,7 +48,7 @@ def clas(classec):
 
 
 def gExClass(classec, date):
-    students = clas(classec)
+    students = json.loads(clas(classec))
     wb = openpyxl.Workbook()
     ws = wb.active
     ws["A1"] = classec

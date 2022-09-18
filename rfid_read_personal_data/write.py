@@ -48,7 +48,7 @@ def do_write():
 
 							nameUSN=nameUSN+';'+ clas + ';' + section
 							payload=ujson.dumps({'data':nameUSN})
-							response = urequests.get(f"https://SmartAttendanceSystem-Server.prateekm2.repl.co", headers = {'content-type': 'application/json'},data=payload)
+							response = urequests.get(f"https://smartattendance11.innovationpsbb.repl.co", headers = {'content-type': 'application/json'},data=payload)
 							rdr.stop_crypto1()
 							if stat == rdr.OK:
 								print("Data written to card")

@@ -84,8 +84,16 @@ def updateEntry(usn):
         lastTimeEntry = currUser["entries"][len(currUser["entries"]) - 1]["start"].split(":")
         print(lastTimeEntry)
         if not checkTime(lastTimeEntry, now):
-            currUser["entries"][len(currUser["entries"]) - 1]["end"] = current_time
-            currUser["inSchool"] = False
+            prevEntry = datetime(int(lastTimeEntry[0]),int(lastTimeEntry[1]),int(lastTimeEntry[2]))
+            current_time_array = current_time.split(':')
+            currEntry = datetime(int(current_time_array[0]),int(current_time_array[1]),int(current_time_array[2]))
+            if int((currEntry-prevEntry).days )== 0:
+                currUser["entries"][len(currUser["entries"]) - 1]["end"] = current_time
+                currUser["inSchool"] = False
+            else:
+                currUser["entries"][len(currUser["entries"]) - 1]["end"] = "null"
+                currUser["entries"].append({"start": current_time})
+                currUser["inSchool"] = True
 
         else:
             print("cool down needed")
@@ -103,6 +111,7 @@ def updateEntry(usn):
             return
 
         if not checkTime(lastTimeEntry, now):
+            #TODO : Once we convert the entire thing to use IST instead of UTC , we also need to ensure that if entry time is logged in the AFTERNOON , entry must be set to null and exit as current time
             print("cool down not needed")
             currUser["entries"].append({"start": current_time})
             currUser["inSchool"] = True

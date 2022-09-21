@@ -220,7 +220,7 @@
                     </div>
                     <div class="mb-3">
                       <label for="exampleFormControlSelect1" class="form-label">Section</label>
-                      <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
+                      <select class="form-select" id="exampleFormControlSelect2" aria-label="Default select example">
                         <option selected>Select Section</option>
                         <option value="E">E</option>
                         <option value="F">F</option>
@@ -245,13 +245,13 @@
                     <div class="mb-3 row">
                       <label for="html5-date-input" class="form-label">Date</label>
                       <div class="col-md-10">
-                        <input class="form-control" type="date" value="2021-06-18" id="html5-date-input" />
+                        <input class="form-control" type="date" id="html5-date-input" />
                       </div>
                     </div>
                     <div class="mb-3 row">
                       <label for="html5-date-input" class="form-label">Submit</label>
                       <div class="col-md-10">
-                        <button type="button" class="btn btn-primary">Submit</button>
+                        <button onclick=down() type="button" class="btn btn-primary">Submit</button>
                       </div>
                     </div>
                   </form>
@@ -287,6 +287,15 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
+    <script>
+      function down(){
+      clas = document.getElementById('exampleFormControlSelect1').value
+      section = document.getElementById('exampleFormControlSelect2').value
+      date = document.getElementById('html5-date-input').value
+      console.log(clas + section + date)
+      window.open('/d?classec=' + clas + " " + section + "&date=" + date.split('-')[0]+':' +date.split('-')[1]+':'+date.split('-')[2], '_blank' )
+    }
+    </script>
     <script src="../static/assets/vendor/libs/jquery/jquery.js"></script>
     <script src="../static/assets/vendor/libs/popper/popper.js"></script>
     <script src="../static/assets/vendor/js/bootstrap.js"></script>

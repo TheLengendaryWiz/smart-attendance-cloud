@@ -30,7 +30,7 @@
     <title>Dashboard </title>
 
     <meta name="description" content="" />
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="../static/assets/img/favicon/favicon.ico" />
 
@@ -177,12 +177,13 @@
               <!-- Search -->
               <div class="navbar-nav align-items-center">
                 <div class="nav-item d-flex align-items-center">
-                  <i class="bx bx-search fs-4 lh-0"></i>
+                  <i class="bx bx-search fs-4 lh-0" onclick="getData()"></i>
                   <input
                     type="text"
                     class="form-control border-0 shadow-none"
                     placeholder="Search..."
                     aria-label="Search..."
+                    id = "searchBar"
                   />
                 </div>
               </div>
@@ -214,39 +215,8 @@
 
             <div class="container-xxl flex-grow-1 container-p-y">
               <div class="row">
-                <div class="col-lg-8 mb-4 order-0">
-                  <div class="card">
-                    <div class="d-flex align-items-end row">
-                      <div class="col-sm-7">
-                        <div class="card-body">
-                          <h5 class="card-title text-primary">USN Search example</h5>
-                          <p class="mb-4">
-                            <span class="fw-bold">Name : </span> Raghav K <br>
-                            <span class="fw-bold">Class : </span> 12 <br>
-                            <span class="fw-bold">Section : </span> E3 <br>
-                            <span class="fw-bold">Is Currently in school : </span> Yes <br>
-                            
-                            <div class="accordion-item card">
-                              <h2 class="accordion-header text-body d-flex justify-content-between" id="accordionIconOne">
-                                <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionIcon-1" aria-controls="accordionIcon-1">
-                                  13/08/2022
-                                </button>
-                              </h2>
-                          
-                              <div id="accordionIcon-1" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
-                                <div class="accordion-body">
-                                  <span class="fw-bold">Entry time : </span> 16:31:43 <br>
-                                </div>
-                              </div>
-                            </div>
-
-                          </p>
-
-                        </div>
-                      </div>
-                      
-                    </div>
-                  </div>
+                <div class="col-lg-8 mb-4 order-0" id="container">
+                  
 
                   <div class="card" style="margin-top: 12px;">
                     <div class="d-flex align-items-end row">
@@ -330,9 +300,129 @@
         document.getElementById("dropdownMenuButton").innerText = 'Name Search';
       }
       function fc(){
-        type='usn';
+        type='class';
         document.getElementById("dropdownMenuButton").innerText = 'Search By Class'
       }
+      function usn(dat){
+        if(dat == null){
+          document.getElementById("container").innerHTML = `<div class="card">
+                    <div class="d-flex align-items-end row">
+                      <div class="col-sm-7">
+                        <div class="card-body">
+                          <h5 class="card-title text-primary">No search results</h5>
+                          </div>
+                      </div>
+                    </div>
+                              
+                              `;}
+        
+        innerhtml = `<div class="card">
+                    <div class="d-flex align-items-end row">
+                      <div class="col-sm-7">
+                        <div class="card-body">
+                          <h5 class="card-title text-primary">USN Search result</h5>
+                          <p class="mb-4">
+                            <span class="fw-bold">Name : </span> ${dat.name} <br>
+                            <span class="fw-bold">Class : </span> ${dat.clas} <br>
+                            <span class="fw-bold">Section : </span> ${dat.section} <br>
+                            <span class="fw-bold">Is Currently in school : </span> ${dat.inSchool.toString()} <br>
+                            
+                            <div class="accordion-item card">
+                              
+                              `;
+        dat.entries.forEach(element => {innerhtml = innerhtml + `<h2 class="accordion-header text-body d-flex justify-content-between" id="accordionIconOne">
+                                <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionIcon-1" aria-controls="accordionIcon-1">
+                                  ${element.start.split(':')[0]+ "/" + element.start.split(':')[1] + "/" + element.start.split(':')[2]}
+                                </button>
+                              </h2>
+                          
+                              <div id="accordionIcon-1" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
+                                <div class="accordion-body">
+                                  <span class="fw-bold">Entry time : </span> ${element.start.split(':')[3] + '/' + element.start.split(':')[4] + '/' + element.start.split(':')[5]} <br>
+                                </div>
+                                <div id="accordionIcon-1" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
+                                <div class="accordion-body">
+                                  <span class="fw-bold">Exit time : </span> ${element.end.split(':')[3] + '/' + element.end.split(':')[4] + '/' + element.end.split(':')[5]} <br>
+                                </div>`
+          
+        });
+        innerhtml = innerhtml + `</div>
+                            </div>
+
+                          </p>
+
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>`
+        document.getElementById("container").innerHTML = innerhtml;
+      }
+      function nameClass(dats, type){
+        document.getElementById("container").innerHTML = '';
+        if(dats == null){
+          document.getElementById("container").innerHTML = `<div class="card">
+                    <div class="d-flex align-items-end row">
+                      <div class="col-sm-7">
+                        <div class="card-body">
+                          <h5 class="card-title text-primary">No search results</h5>
+                          </div>
+                      </div>
+                    </div>
+                              
+                              `;
+        }
+
+        dats.forEach(dat => {
+          innerhtml = `<div class="card">
+                    <div class="d-flex align-items-end row">
+                      <div class="col-sm-7">
+                        <div class="card-body">
+                          <h5 class="card-title text-primary">${type} Search result</h5>
+                          <p class="mb-4">
+                            <span class="fw-bold">Name : </span> ${dat.name} <br>
+                            <span class="fw-bold">Class : </span> ${dat.clas} <br>
+                            <span class="fw-bold">Section : </span> ${dat.section} <br>
+                            <span class="fw-bold">Usn : </span> ${dat.usn} <br>
+                            <span class="fw-bold">Is Currently in school : </span> ${dat.inSchool.toString()} <br>
+                          </p>
+                          </h5>
+                        </div>
+                      </div>
+                    </div>        
+                              `;
+          document.getElementById("container").innerHTML = document.getElementById("container").innerHTML + innerhtml;
+      });
+    }
+      function getData(){
+        console.log(type)
+        let payload =  {"q": type, "args": document.getElementById("searchBar").value}
+        $.post("/q", payload, function(data, status){
+          console.log(data)
+          if(type == "usn"){
+            if(data == ""){
+              usn(null);
+            }else{
+              usn(JSON.parse(data));
+            }
+          }
+          if(type == "name"){
+            if(data == "[]"){
+              nameClass(null, "Name");
+            }else{
+              nameClass(JSON.parse(data), "Name");
+            }
+          }
+          if(type == "class"){
+          
+            nameClass(JSON.parse(data), "Class");
+            
+          }
+        }
+        )
+
+      }
+      
     </script>
     <script src="../static/assets/vendor/libs/jquery/jquery.js"></script>
     <script src="../static/assets/vendor/libs/popper/popper.js"></script>

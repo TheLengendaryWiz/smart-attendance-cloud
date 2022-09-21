@@ -24,26 +24,29 @@ def usn(usn):
         cont = json.loads(cont)
     try:
         print("from drv" + json.dumps(cont[usn.upper()]))
+        cont[usn.upper()]["usn"] = list(cont.keys())[list(cont.values()).index(cont[usn.upper()])]
         return json.dumps(cont[usn.upper()])
     except KeyError:
-        return "Usn Not Found"
+        return ""
 
 
 def clas(classec):
     clas = classec.split(" ")[0]
     sec = classec.split(" ")[1]
+
     with open("data.json", "r") as f:
         cont = f.read()
 
         cont = json.loads(cont)
         final = []
+        print("from class" + str(final))
         for i in cont.keys():
 
             if str(cont[i]["clas"]) == str(clas) and str(cont[i]["section"]).lower() == sec.lower():
                 new = cont[i]
                 new["usn"] = i
                 final.append(new)
-    print(final)
+        print("from class" + str(final))
     return json.dumps(final)
 
 

@@ -43,7 +43,7 @@ def retQuery():
 
     type = payload["q"]
     args = payload["args"]
-    print("from main" + RetTypes[type](args))
+
     return RetTypes[type](args)
 
 

@@ -10,7 +10,7 @@
 * Copyright ThemeSelection (https://themeselection.com)
 
 =========================================================
- -->
+ -->  
 <!-- beautify ignore:start -->
 <html
   lang="en"
@@ -196,9 +196,9 @@
                     USN Search
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <li><a class="dropdown-item" href="javascript:void(0);">USN Search</a></li>
-                    <li><a class="dropdown-item" href="javascript:void(0);">Name Search</a></li>
-                    <li><a class="dropdown-item" href="javascript:void(0);">Search by class</a></li>
+                    <li><a class="dropdown-item" onclick=fu() href="javascript:void(0);">USN Search</a></li>
+                    <li><a class="dropdown-item" onclick=fn() href="javascript:void(0);">Name Search</a></li>
+                    <li><a class="dropdown-item" onclick=fc() href="javascript:void(0);">Search by class</a></li>
                   </ul>
                 </div>
                 
@@ -317,6 +317,23 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
+    <script>
+      var type='usn'
+      function fu(){
+        console.log(document.getElementById("dropdownMenuButton").innerText)
+        type='usn';
+        document.getElementById("dropdownMenuButton").innerText = 'USN Search';
+      }
+      function fn(){
+        console.log('fn')
+        type='name';
+        document.getElementById("dropdownMenuButton").innerText = 'Name Search';
+      }
+      function fc(){
+        type='usn';
+        document.getElementById("dropdownMenuButton").innerText = 'Search By Class'
+      }
+    </script>
     <script src="../static/assets/vendor/libs/jquery/jquery.js"></script>
     <script src="../static/assets/vendor/libs/popper/popper.js"></script>
     <script src="../static/assets/vendor/js/bootstrap.js"></script>

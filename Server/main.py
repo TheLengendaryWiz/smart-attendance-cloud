@@ -91,7 +91,7 @@ def updateEntry(usn):
                 currUser["entries"][len(currUser["entries"]) - 1]["end"] = current_time
                 currUser["inSchool"] = False
             else:
-                currUser["entries"][len(currUser["entries"]) - 1]["end"] = "null"
+                currUser["entries"][len(currUser["entries"]) - 1]["end"] = None
                 currUser["entries"].append({"start": current_time})
                 currUser["inSchool"] = True
 

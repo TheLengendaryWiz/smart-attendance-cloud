@@ -240,34 +240,40 @@
                             <span class="fw-bold">Section : </span> ${dat.section} <br>
                             <span class="fw-bold">Is Currently in school : </span> ${dat.inSchool.toString()} <br>
                             
-                            <div class="accordion-item card">
+                            
                               
                               `;
-        dat.entries.forEach(element => {if(element.end!=undefined){innerhtml = innerhtml + `<h2 class="accordion-header text-body d-flex justify-content-between" id="accordionIconOne">
-                                <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionIcon-1" aria-controls="accordionIcon-1">
+        dat.entries.forEach((element,index) => {if(element.end!=undefined){innerhtml = innerhtml + `<div class="accordion-item card"><h2 class="accordion-header text-body d-flex justify-content-between" id="accordionIconOne">
+                                <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#a${index}" aria-controls="accordionIcon-1">
                                   ${element.start.split(':')[0]+ "/" + element.start.split(':')[1] + "/" + element.start.split(':')[2]}
                                 </button>
                               </h2>
                           
-                              <div id="accordionIcon-1" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
+                              <div id="a${index}" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
                                 <div class="accordion-body">
                                   <span class="fw-bold">Entry time : </span> ${element.start.split(':')[3] + ':' + element.start.split(':')[4] + ':' + element.start.split(':')[5]} <br>
                                 </div>
-                                <div id="accordionIcon-1" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
+                                <div id="a${index}" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
                                 <div class="accordion-body">
                                   <span class="fw-bold">Exit time : </span> ${element.end.split(':')[3] + ':' + element.end.split(':')[4] + ':' + element.end.split(':')[5]} <br>
-                                </div>`
+                                </div>
+                                </div>
+                                </div>
+                                </div>
+                                `
           
       }else{
-        innerhtml = innerhtml + `<h2 class="accordion-header text-body d-flex justify-content-between" id="accordionIconOne">
-                                <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#accordionIcon-1" aria-controls="accordionIcon-1">
+        innerhtml = innerhtml + `<div class="accordion-item card"><h2 class="accordion-header text-body d-flex justify-content-between" id="accordionIconOne">
+                                <button type="button" class="accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#a${index}" aria-controls="accordionIcon-1">
                                   ${element.start.split(':')[0]+ "/" + element.start.split(':')[1] + "/" + element.start.split(':')[2]}
                                 </button>
                               </h2>
                           
-                              <div id="accordionIcon-1" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
+                              <div id="a${index}" class="accordion-collapse collapse" data-bs-parent="#accordionIcon">
                                 <div class="accordion-body">
                                   <span class="fw-bold">Entry time : </span> ${element.start.split(':')[3] + ':' + element.start.split(':')[4] + ':' + element.start.split(':')[5]} <br>
+                                </div>
+                                </div>
                                 </div>
                                 `
       }});

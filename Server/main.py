@@ -1,6 +1,6 @@
 import dataRetreival.drv
 import flask
-from datetime import datetime
+from datetime import datetime,timedelta
 import json
 import register
 from openpyxl.writer.excel import save_virtual_workbook
@@ -73,6 +73,8 @@ def updateEntry(usn):
     data = json.loads(data)
     # NOTE : ON REPLIT SERVER THIS DEFAULTS TO UTC
     now = datetime.now()
+    if str(now.astimezone().tzinfo)=='UTC':
+      now = now + timedelta(hours=5,minutes=30)
     if usn in data.keys():
         currUser = data[usn]
     else:

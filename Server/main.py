@@ -130,7 +130,9 @@ def updateEntry(usn):
 @app.route('/', methods=['GET', 'POST'])
 def update():
     if flask.request.method == 'POST':
-        usn = flask.request.form['usn']
+    
+        usn = flask.request.json['usn']
+        print(usn)
         updateEntry(usn)
         print("post")
         return "Done"
@@ -144,8 +146,10 @@ def registerEndpoint():
     if flask.request.method == 'GET':
         return 'GEt'
     if flask.request.method == 'POST':
+        print("post")
         nameusnuid = flask.request.json['data']
         nameusnuidarray = nameusnuid.split(';')
+        print(nameusnuidarray)
         register.register(nameusnuidarray[0], nameusnuidarray[1], nameusnuidarray[2], nameusnuidarray[3], nameusnuidarray[4])
         return "Done"
 

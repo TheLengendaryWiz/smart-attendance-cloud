@@ -2,10 +2,15 @@ import main
 from os import uname
 import connect
 import ujson
+import urequests
 def do_write():
 
 
-
+	#TODO: Add a few checks for name and usn. ie: to check if they have a semicolon or if USN is of specific format
+	name=input("Enter Name: ")
+	usn = input("Enter USN: ")
+	clas=input("ENter Class : ")
+	section = input("Enter Section : ")
 	rdr = main.MFRC522(0, 2, 4, 5, 14)
 
 	print("")
@@ -31,15 +36,11 @@ def do_write():
 					if rdr.select_tag(raw_uid) == rdr.OK:
 
 						key = [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]
-						#TODO: Add a few checks for name and usn. ie: to check if they have a semicolon or if USN is of specific format
-						name=input("Enter Name: ")
-						usn = input("Enter USN: ")
-						clas=input("ENter Class : ")
-						section = input("Enter Section : ")
+
 						nameusn = name + ';' + usn
 						if(len(nameusn)<16):
 							nameusn=nameusn+'\n'*(16-len(nameusn))
-						elif len(nameusn>16):
+						elif len(nameusn)>16:
 							#Cutting it short to only LAST 16 charecters so parts of name will be cutoff but USN remains intact
 							nameusn=nameusn[16:]
 						if rdr.auth(rdr.AUTHENT1A, 8, key, raw_uid) == rdr.OK:
